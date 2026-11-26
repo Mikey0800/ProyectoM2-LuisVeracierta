@@ -1,0 +1,290 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MiniBlog API",
+    "version": "1.0.0",
+    "description": "Proyecto Integrador M2 de Luis Rafael Veracierta Navarro. API de autores y publicaciones."
+  },
+  "servers": [
+    { "url": "/", "description": "Servidor actual" }
+  ],
+  "paths": {
+    "/authors": {
+      "get": {
+        "tags": ["Authors"],
+        "summary": "Listar autores",
+        "responses": {
+          "200": {
+            "description": "Lista de autores",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Author" }
+                }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      },
+      "post": {
+        "tags": ["Authors"],
+        "summary": "Crear autor",
+        "requestBody": { "$ref": "#/components/requestBodies/AuthorBody" },
+        "responses": {
+          "201": { "$ref": "#/components/responses/AuthorResponse" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
+    },
+    "/authors/{id}": {
+      "parameters": [
+        { "$ref": "#/components/parameters/Id" }
+      ],
+      "get": {
+        "tags": ["Authors"],
+        "summary": "Obtener un autor",
+        "responses": {
+          "200": { "$ref": "#/components/responses/AuthorResponse" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      },
+      "put": {
+        "tags": ["Authors"],
+        "summary": "Actualizar un autor",
+        "description": "Requiere name y email. Si se omite bio, se guarda null.",
+        "requestBody": { "$ref": "#/components/requestBodies/AuthorBody" },
+        "responses": {
+          "200": { "$ref": "#/components/responses/AuthorResponse" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      },
+      "delete": {
+        "tags": ["Authors"],
+        "summary": "Eliminar un autor",
+        "description": "También elimina sus publicaciones por ON DELETE CASCADE.",
+        "responses": {
+          "204": { "description": "Autor eliminado. Sin cuerpo de respuesta." },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
+    },
+    "/posts": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Listar publicaciones",
+        "responses": {
+          "200": {
+            "description": "Lista de publicaciones",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Post" }
+                }
+              }
+            }
+          },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      },
+      "post": {
+        "tags": ["Posts"],
+        "summary": "Crear publicación",
+        "requestBody": { "$ref": "#/components/requestBodies/PostBody" },
+        "responses": {
+          "201": { "$ref": "#/components/responses/PostResponse" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "parameters": [
+        { "$ref": "#/components/parameters/Id" }
+      ],
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Obtener una publicación",
+        "responses": {
+          "200": { "$ref": "#/components/responses/PostResponse" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      },
+      "put": {
+        "tags": ["Posts"],
+        "summary": "Actualizar una publicación",
+        "description": "Requiere title, content y author_id. Si se omite published, se guarda false.",
+        "requestBody": { "$ref": "#/components/requestBodies/PostBody" },
+        "responses": {
+          "200": { "$ref": "#/components/responses/PostResponse" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      },
+      "delete": {
+        "tags": ["Posts"],
+        "summary": "Eliminar una publicación",
+        "responses": {
+          "204": { "description": "Publicación eliminada. Sin cuerpo de respuesta." },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
+    },
+    "/posts/author/{authorId}": {
+      "get": {
+        "tags": ["Posts"],
+        "summary": "Listar publicaciones con detalle de su autor",
+        "description": "Un autor existente sin publicaciones devuelve [].",
+        "parameters": [
+          {
+            "name": "authorId",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "minimum": 1 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Publicaciones con el objeto author anidado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/PostWithAuthor" }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "500": { "$ref": "#/components/responses/ServerError" }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "Id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "schemas": {
+      "AuthorInput": {
+        "type": "object",
+        "required": ["name", "email"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 100, "example": "Luis Veracierta" },
+          "email": { "type": "string", "format": "email", "maxLength": 150, "example": "luis@example.com" },
+          "bio": { "type": "string", "nullable": true, "example": "Estudiante de desarrollo web" }
+        }
+      },
+      "Author": {
+        "allOf": [
+          { "$ref": "#/components/schemas/AuthorInput" },
+          {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer", "example": 1 },
+              "created_at": { "type": "string", "format": "date-time" }
+            }
+          }
+        ]
+      },
+      "PostInput": {
+        "type": "object",
+        "required": ["title", "content", "author_id"],
+        "properties": {
+          "title": { "type": "string", "minLength": 1, "maxLength": 200, "example": "Mi primera publicación" },
+          "content": { "type": "string", "minLength": 1, "example": "Aprendiendo Express y PostgreSQL" },
+          "author_id": { "type": "integer", "minimum": 1, "maximum": 2147483647, "example": 1 },
+          "published": { "type": "boolean", "default": false }
+        }
+      },
+      "Post": {
+        "allOf": [
+          { "$ref": "#/components/schemas/PostInput" },
+          {
+            "type": "object",
+            "properties": {
+              "id": { "type": "integer", "example": 1 },
+              "created_at": { "type": "string", "format": "date-time" }
+            }
+          }
+        ]
+      },
+      "PostWithAuthor": {
+        "allOf": [
+          { "$ref": "#/components/schemas/Post" },
+          {
+            "type": "object",
+            "properties": {
+              "author": { "$ref": "#/components/schemas/Author" }
+            }
+          }
+        ]
+      }
+    },
+    "requestBodies": {
+      "AuthorBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/AuthorInput" }
+          }
+        }
+      },
+      "PostBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/PostInput" }
+          }
+        }
+      }
+    },
+    "responses": {
+      "AuthorResponse": {
+        "description": "Autor obtenido, creado o actualizado",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Author" }
+          }
+        }
+      },
+      "PostResponse": {
+        "description": "Publicación obtenida, creada o actualizada",
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/Post" }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Datos inválidos, email duplicado o referencia a un autor inexistente."
+      },
+      "NotFound": {
+        "description": "El recurso solicitado no existe."
+      },
+      "ServerError": {
+        "description": "Error interno del servidor."
+      }
+    }
+  }
+}
