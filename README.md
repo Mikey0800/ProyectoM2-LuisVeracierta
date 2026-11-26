@@ -219,9 +219,9 @@ La aplicación utiliza PORT y escucha en 0.0.0.0.
 Variables de conexión:
 PGHOST, PGPORT, PGDATABASE, PGUSER y PGPASSWORD.
 
-URL pública de la API: pendiente.
+URL pública de la API: https://proyecto-m2-production.up.railway.app/
 
-URL interna de la API, sin credenciales: pendiente.
+URL interna de la API: http://extraordinary-appreciation.railway.internal:8080
 
 documentacion/railway.png
 
