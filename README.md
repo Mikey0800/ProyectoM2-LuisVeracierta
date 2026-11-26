@@ -182,6 +182,8 @@ Con el servidor ejecutándose:
 Swagger UI permite consultar los cuerpos, parámetros y respuestas
 de los endpoints, y enviar solicitudes de prueba.
 
+![Evidencia de swagger ui](documentacion/localhost.png)
+
 ## Organización
 
 - `index.js`: inicia el servidor.
@@ -223,7 +225,7 @@ URL pública de la API: https://proyecto-m2-production.up.railway.app/
 
 URL interna de la API: http://extraordinary-appreciation.railway.internal:8080
 
-documentacion/railway.png
+![Evidencia del despliegue en Railway](documentacion/railway.png)
 
 ## Registro de uso de IA
 
@@ -253,7 +255,15 @@ ChatGPT propuso y generó código para:
 
 ### Ejemplos de prompts utilizados
 
-Los siguientes fragmentos corresponden a solicitudes realizadas durante la conversación:
+Para este proyecto utilicé solicitudes breves, no usé prompts muy largos y especificos, le pedí orientación, explicaciones, ejemplos de código y revisión de mis avances para desarrollar con su apoyo el proyecto.
+
+- Evidencias de mi chat con chatGPT
+![Conversación con ChatGPT](documentacion/chatIA.png)
+![Conversación con ChatGPT](documentacion/chatIA2.png)
+![Conversación con ChatGPT](documentacion/chatIA3.png)
+![Conversación con ChatGPT](documentacion/chatIA4.png)
+
+Los siguientes ejemplos resumen solicitudes realizadas durante la conversación
 
 | Prompt | Influencia en el desarrollo |
 |---|---|
