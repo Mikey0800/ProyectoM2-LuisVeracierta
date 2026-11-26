@@ -196,9 +196,16 @@ de los endpoints, y enviar solicitudes de prueba.
 
 ## Deployment en Railway
 
-Estado: pendiente de desplegar y verificar.
+Estado: desplegado en Railway. Consultas de lectura verificadas el 26 de noviembre de 2026.
 
-Pasos previstos:
+API pública: https://proyecto-m2-production.up.railway.app/
+Swagger UI: https://proyecto-m2-production.up.railway.app/docs/
+OpenAPI: https://proyecto-m2-production.up.railway.app/openapi.json
+
+Pre-deploy: npm run db:setup
+Arranque: npm start
+
+Procedimiento de despliegue:
 
 1. Subir la versión actual del proyecto a GitHub.
 2. Crear un proyecto en Railway con PostgreSQL y un servicio para la API.
@@ -216,13 +223,11 @@ URL pública de la API: pendiente.
 
 URL interna de la API, sin credenciales: pendiente.
 
-Evidencia del despliegue: pendiente.
-
-Estos campos se completarán con los datos reales del despliegue.
+documentacion/railway.png
 
 ## Registro de uso de IA
 
-Se utilizó ChatGPT como apoyo durante el desarrollo.
+Desarrollé este proyecto utilizando ChatGPT como tutor y herramienta de generación de código, explicación y revisión. La IA corrigió gran parte de la implementación final me ayudó a incorporar y ajustar el código, plantear dudas, tomar decisiones de organización y comprobar los resultados.
 
 Las consultas incluyeron:
 
@@ -235,10 +240,6 @@ Las consultas incluyeron:
 La asistencia aportó explicaciones, ejemplos y bloques de código.
 La implementación se fue incorporando y comprobando mediante
 consultas en pgAdmin, solicitudes curl y pruebas automatizadas.
-
-## Registro de uso de inteligencia artificial
-
-Desarrollé este proyecto utilizando ChatGPT como tutor y herramienta de generación de código, explicación y revisión. La IA corrigió gran parte de la implementación final me ayudó a incorporar y ajustar el código, plantear dudas, tomar decisiones de organización y comprobar los resultados.
 
 ### Alcance de la asistencia
 
